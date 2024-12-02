@@ -3,7 +3,9 @@ version: "3.8"
 services:
   wordpress:
     container_name: wordpress-main
-    image: custom-wordpress
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "8111:80"
