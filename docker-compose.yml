@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  wordpress:
+    container_name: wordpress-main
+    image: custom-wordpress
+    restart: always
+    ports:
+      - "8111:80"
+    environment:
+      WORDPRESS_DB_HOST: wordpress-mysql
+      WORDPRESS_DB_USER: ncadmin
+      WORDPRESS_DB_PASSWORD: ncpassword
+      WORDPRESS_DB_NAME: ncwordpress
+      WP_HOME: https://wp.naturescart.ae
+      WP_SITEURL: https://wp.naturescart.ae
+    volumes:
+      - wordpress:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    container_name: wordpress-mysql
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: ncwordpress
+      MYSQL_USER: ncadmin
+      MYSQL_PASSWORD: ncpassword
+      MYSQL_ROOT_PASSWORD: ncroot
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+  wordpress:
