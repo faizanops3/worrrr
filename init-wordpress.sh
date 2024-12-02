@@ -8,6 +8,12 @@ until mariadb -h"${WORDPRESS_DB_HOST}" -u"${WORDPRESS_DB_USER}" -p"${WORDPRESS_D
 done
 echo "Database is ready."
 
+# Download WordPress core files if not already present
+if [ ! -f /var/www/html/wp-config.php ]; then
+    echo "Downloading WordPress core files..."
+    wp --allow-root --path=/var/www/html core download
+fi
+
 # Proceed with WordPress initialization
 wp --allow-root --path=/var/www/html core install \
     --url="${WP_HOME}" \
